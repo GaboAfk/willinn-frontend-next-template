@@ -1,3 +1,4 @@
+/*
 'use client'
 
 import { Eye, EyeOff } from 'lucide-react';
@@ -97,3 +98,4 @@ export default function LoginPage() {
         </div>
     );
 }
+*/

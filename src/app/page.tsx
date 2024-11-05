@@ -6,7 +6,16 @@ import {useRouter} from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 
-const Input = ({ id, label, type = "text", value, onChange, placeholder, required }) => (
+interface InputProps {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+}
+
+const Input = ({ id, label, type = "text", value, onChange, placeholder }: InputProps) => (
     <div className="mb-4">
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
       <input
@@ -16,12 +25,16 @@ const Input = ({ id, label, type = "text", value, onChange, placeholder, require
         value={value}
         onChange={onChange}
         className="mt-1 block w-full px-3 py-2 border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500"
-        required={required}
+        required
       />
     </div>
 );
 
-const Button = ({ children }) => (
+interface ButtonProps {
+  children: React.ReactNode;
+}
+
+const Button = ({ children }: ButtonProps) => (
     <button
         type="submit"
         className="w-full py-2 px-4 bg-pink-500 text-white font-semibold rounded-md shadow-sm hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
@@ -30,6 +43,7 @@ const Button = ({ children }) => (
     </button>
 );
 
+const _backUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -53,7 +67,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/login`, {
+      const response = await axios.post(`${_backUrl}/login`, {
         email: email,
         password: password
       });
@@ -76,11 +90,12 @@ export default function LoginPage() {
   const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //reset pass logic fetch PUT user
+    console.log(resetPassword);
     setShowForgotPassword(false);
   };
 
   return (
-        <div className="bg-gray-100 flex items-center justify-center min-h-screen" onClick={handleRegister && handleForgotPassword()}>
+        <div className="bg-gray-100 flex items-center justify-center min-h-screen">
           <div className="w-full max-w-md mx-auto">
             <div className="mb-6">
                 <Image src="/willinnlogo.png" alt="Willinn Logo" width="100" height="50" className="mx-auto mb-4"/>
@@ -88,7 +103,7 @@ export default function LoginPage() {
             <div className="bg-white p-8 rounded-lg shadow-md">
               <h2 className="text-2xl text-gray-800 font-semibold text-center mb-6">Inicia sesión</h2>
               <form onSubmit={handleSubmit}>
-                <Input id="email" label="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Introduce tu email" required />
+                <Input id="email" label="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Introduce tu email" />
 
                 <div className="mb-6">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -102,7 +117,6 @@ export default function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="block w-full px-3 py-2 border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500"
-                        required
                     />
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
                          onClick={toggleShowPassword}>
@@ -133,9 +147,9 @@ export default function LoginPage() {
                     <X type="button" onClick={() => setShowRegister(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full"/>
                   </div>
                   <form onSubmit={handleRegister}></form>
-                  <Input id="register-name" label="Nombre" type="string" value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Introduce tu nombre" required />
-                  <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Introduce tu email" required />
-                  <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Introduce tu contraseña" required />
+                  <Input id="register-name" label="Nombre" type="string" value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Introduce tu nombre" />
+                  <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Introduce tu email" />
+                  <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Introduce tu contraseña" />
 
                   <div className="mb-4">
                     <Button>Registrarse</Button>
@@ -152,8 +166,8 @@ export default function LoginPage() {
                     <X type="button" onClick={() => setShowForgotPassword(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full"/>
                   </div>
                   <form onSubmit={handleForgotPassword}></form>
-                  <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setEmail(e.target.value)} placeholder="Email a recuperar" required />
-                  <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setResetPassword(e.target.value)} placeholder="Nueva contraseña" required />
+                  <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setEmail(e.target.value)} placeholder="Email a recuperar" />
+                  <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setResetPassword(e.target.value)} placeholder="Nueva contraseña" />
 
                   <div className="mb-4">
                     <Button>Recuperar</Button>
