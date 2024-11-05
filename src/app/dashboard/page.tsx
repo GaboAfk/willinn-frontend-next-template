@@ -1,101 +1,80 @@
-/*
 'use client'
 
-import { Eye, EyeOff } from 'lucide-react';
-import React, {useState} from "react";
-import {useRouter} from "next/navigation";
-import Image from "next/image";
-import axios from "axios";
+import UserList from "@/components/userList";
+import AddUserForm from "@/components/addUserForm";
 
-export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const router = useRouter();
-    const [showPassword, setShowPassword] = useState(false);
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`http://localhost:5000/login`, {
-                email: email,
-                password: password
-            });
-            if (response.status === 200 && response.data.isSuccess) {
-                localStorage.setItem('token', response.data.token);
-                router.push('/dashboard');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+export default function DashboardPage() {
     return (
-        <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-            <div className="w-full max-w-md mx-auto">
-                <div className="mb-6">
-                    <Image src="/willinnlogo.png" alt="Willinn Logo" width="100" height="50" className="mx-auto mb-4"/>
-                </div>
-                <div className="bg-white p-8 rounded-lg shadow-md">
-                    <h2 className="text-2xl text-gray-800 font-semibold text-center mb-6">Inicia sesión</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                E-mail
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Introduce tu email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500"
-                                required
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                Contraseña
-                            </label>
-                            <div className="relative mt-1">
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    id="password"
-                                    placeholder="Introduce tu contraseña"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full px-3 py-2 border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500"
-                                    required
-                                />
-                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
-                                     onClick={toggleShowPassword}>
-                                    {showPassword ? <EyeOff className="text-gray-400"/> : <Eye className="text-gray-400"/>}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <button
-                                type="submit"
-                                className="w-full py-2 px-4 bg-pink-500 text-white font-semibold rounded-md shadow-sm hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-                            >
-                                Ingresar
-                            </button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <a href="#" className="text-sm text-gray-500 hover:text-gray-700">
-                                Registrarse
-                            </a>
-                            <a href="#" className="text-sm text-gray-500 hover:text-gray-700">
-                                ¿Olvidaste la contraseña?
-                            </a>
-                        </div>
-                    </form>
+        <div className="bg-gray-100 min-h-screen flex text-gray-800">
+            <div>
+                <h1 className="text-3xl font-semibold mb-8">Usuarios</h1>
+                <div className="flex">
+                    <UserList/>
+                    <AddUserForm/>
                 </div>
             </div>
         </div>
     );
 }
-*/
+
+
+/*
+import { useState } from 'react';
+
+export default function Home() {
+    const [users, setUsers] = useState([
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
+    ]);
+
+    return (
+        <div className="bg-gray-100 min-h-screen flex text-gray-800">
+            {/!* Main Content *!/}
+
+            <div>
+                <h1 className="text-3xl font-semibold mb-8">Usuarios</h1>
+                <div className="flex">
+                    {/!*{<UserList/>}*!/}
+
+
+                    {/!* Add User Form *!/}
+                    {/!*<div className="w-1/3 bg-white rounded-lg shadow p-6">
+                        <h2 className="text-xl font-semibold mb-6">Agregar usuario</h2>
+                        <form>
+                            <div className="mb-4">
+                                <label htmlFor="nombre" className="block text-gray-700">Nombre</label>
+                                <input type="text" id="nombre" placeholder="Introduce el nombre" className="w-full bg-gray-100 rounded-lg p-2 mt-2 focus:outline-none" />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="apellido" className="block text-gray-700">Apellido</label>
+                                <input type="text" id="apellido" placeholder="Introduce el apellido" className="w-full bg-gray-100 rounded-lg p-2 mt-2 focus:outline-none" />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-gray-700">E-mail</label>
+                                <input type="email" id="email" placeholder="Introduce tu E-mail" className="w-full bg-gray-100 rounded-lg p-2 mt-2 focus:outline-none" />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="password" className="block text-gray-700">Contraseña</label>
+                                <input type="password" id="password" placeholder="Introduce tu contraseña" className="w-full bg-gray-100 rounded-lg p-2 mt-2 focus:outline-none" />
+                            </div>
+                            <div className="mb-6">
+                                <label htmlFor="activar" className="block text-gray-700 mb-2">Activar</label>
+                                <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" id="activar" name="toggle" className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                                    <label htmlFor="activar" className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                </div>
+                            </div>
+                            <button type="submit" className="w-full bg-purple-500 text-white rounded-lg p-2">Guardar</button>
+                        </form>
+                    </div>*!/}
+                </div>
+            </div>
+        </div>
+    );
+}*/
