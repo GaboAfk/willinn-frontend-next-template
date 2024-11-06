@@ -2,10 +2,19 @@
 
 import { AuthProvider } from "@/app/dashboard/authContext";
 import UserList from "@/components/userList";
-import AddUserForm from "@/components/addUserForm";
 import {UserProvider} from "@/app/dashboard/userContext";
+import UpdateUserForm from "@/components/updateUserForm";
+import {UserId} from "@/types/userId";
 
-export default function DashboardPage() {
+interface Params {
+    params: {
+        userId: UserId;
+    };
+}
+
+export default function DashboardPage({ params }: Params) {
+    const { userId } = params;
+
     return (
         <AuthProvider>
             <UserProvider>
@@ -17,7 +26,7 @@ export default function DashboardPage() {
                                 <UserList/>
                             </div>
                             <div className="w-2/5 flex flex-col">
-                            <AddUserForm/>
+                                <UpdateUserForm userId={userId}/>
                             </div>
                         </div>
                     </div>
