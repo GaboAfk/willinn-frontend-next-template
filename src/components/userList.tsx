@@ -1,124 +1,108 @@
-import React, {useState} from "react";
-import {Eye, EyeOff, Search} from "lucide-react";
-import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
+import React, { useState } from "react";
+import { Ellipsis, Pencil, Search, Trash2 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { User } from "@/types/user"
+import {useUser} from "@/app/dashboard/userContext";
+import {useAuth} from "@/app/dashboard/authContext";
+import axios from "axios";
+import {useRouter} from "next/navigation";
+
+
 
 export default function UserList() {
-    const [users, setUsers] = useState([
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-        { name: 'Francis Santos', email: 'fsantos@willinn.io' },
-    ]);
+    const _backUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const { authToken } = useAuth()
+    const { users, setUsers, fetchUserList } = useUser();
+    const [showUserOptions, setShowUserOptions] = useState(Array(users.length).fill(false));
+    const [searchUser, setSearchUser] = useState('');
+
+    const handleIconClick = (index: number) => {
+       const newShow = Array(users.length).fill(false);
+       newShow[index] = !showUserOptions[index];
+       setShowUserOptions(newShow);
+    };
+
+    const filteredUsers = searchUser
+        ? users.filter(user =>
+            user.name.toLowerCase().includes(searchUser.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchUser.toLowerCase())
+        )
+        : users;
+
+    const handleDeleteUser = async (userId: number) => {
+      try {
+          const response = await axios.delete(`${_backUrl}/users/${userId}`, {
+              headers: {
+                  'Authorization': `Bearer ${authToken}`
+              }
+          });
+          if (response.status === 200) {
+              const updateList = users.filter(user => user.id !== userId);
+              setUsers(updateList);
+          }
+      } catch (error) {
+          console.log(error);
+      }
+    };
+
+    const route = useRouter();
+
 
     return (
-        <div className="bg-white rounded-lg shadow p-6 mr-6">
-
+        <div className="w-full bg-white rounded-lg shadow p-6 flex flex-col h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold mr-4">Usuarios</h2>
                 <div className="relative">
                     <div className="absolute inset-y-0 left-4 pr-3 flex items-center text-sm leading-5 cursor-pointer">
                         <Search className="text-gray-400"></Search>
                     </div>
-                    <input type="text" placeholder="Buscar"
-                           className="bg-gray-100 border rounded-full pl-12 pr-4 py-2 text-sm focus:outline-none focus:border-gray-300"/>
+                    <input
+                        type="text"
+                        placeholder="Buscar"
+                        className="border rounded-full pl-12 pr-4 py-2 text-sm focus:outline-none focus:border-gray-300"
+                        value={searchUser}
+                        onChange={(e) => setSearchUser(e.target.value)}
+                    />
                 </div>
             </div>
-            <div>
+            <div className="flex flex-col flex-1">
                 <div className="flex pb-4 font-bold">
-                    <p className="pr-24">Nombre</p>
-                    <p>Correo</p>
+                    <p className="w-2/6">Nombre</p>
+                    <p className="w-3/6">Correo</p>
+                    <p className="w-1/6 text-right pr-4"></p>
                 </div>
-                <ScrollArea className="w-full text-left">
-                    <div className="flex flex-col space-y-2">
-                        {users.map((user, index) => (
-                            <div key={index} className="bg-white border border-gray-300 p-2 rounded-lg shadow-md transition duration-200 hover:bg-gray-300">
-                                <div className="flex items-center w-full">
-                <span className="truncate text-left w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold">
-                    {user.name.trim()}
-                </span>
+                <ScrollArea className="w-full text-left flex-1 overflow-y-auto max-h-96">
+                    <div className="flex flex-col">
+                        {filteredUsers.map((user:User, index) => (
+                            <div key={index}
+                                 className="bg-white py-4 w-full truncate border-t text-gray-500 flex items-center">
+                                <div className="w-2/6 pr-12 truncate">
+                                    <span>{user.name.trim()}</span>
                                 </div>
-                                <div className="text-right">
+                                <div className="w-3/6 pr-4 truncate">
                                     <span>{user.email}</span>
+                                </div>
+                                <div className="w-1/6 text-right">
+                                    <div
+                                        className="inline-block text-gray-800 rounded-full bg-gray-100 cursor-pointer -ml-5"
+                                        onClick={() => handleIconClick(index)}
+                                    >
+                                        {showUserOptions[index] ? (
+                                            <div className="flex items-center space-x-4 px-2">
+                                                <Trash2 className="inline-block text-pink-600"
+                                                onClick={() => handleDeleteUser(user.id)} />
+                                                <Pencil className="inline-block" onClick={() => route.push(`/dashboard/${user.id}`)}/>
+                                            </div>
+                                        ) : (
+                                            <Ellipsis/>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </ScrollArea>
             </div>
-
-            <table className="w-full text-left">
-                <thead>
-                <tr>
-                    <th className="pb-4">Nombre</th>
-                    <th className="pb-4">Correo</th>
-                    <th className="pb-4"></th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((user, index) => (
-                    <tr key={index} className="border-t">
-                        <td className="py-4">{user.name}</td>
-                        <td className="py-4">{user.email}</td>
-                        <td className="py-4 text-right">
-                            <i className="fas fa-trash-alt text-pink-500 mr-3"></i>
-                            <i className="fas fa-edit text-gray-400"></i>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <div className="flex justify-center mt-6">
-                <a href="#" className="text-pink-500 mx-2">Anterior</a>
-                <a href="#" className="bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-2">1</a>
-                <a href="#" className="text-pink-500 mx-2">2</a>
-                <a href="#" className="text-pink-500 mx-2">3</a>
-                <a href="#" className="text-pink-500 mx-2">4</a>
-                <a href="#" className="text-pink-500 mx-2">Siguiente</a>
-            </div>
         </div>
-
-        /*<div className="bg-white rounded-lg shadow p-6 mr-6">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold">Usuarios</h2>
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Buscar"
-                        className="bg-gray-100 rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none"
-                    />
-                    <i className="fas fa-search absolute left-3 top-2.5 text-gray-400" />
-                </div>
-            </div>
-            <table className="w-full text-left">
-                <thead>
-                <tr>
-                    <th className="pb-4">Nombre</th>
-                    <th className="pb-4">Correo</th>
-                    <th className="pb-4" />
-                </tr>
-                </thead>
-                <tbody>
-                {[...Array(8)].map((_, index) => (
-                    <tr key={index} className="border-t">
-                        <td className="py-4">Francis Santos</td>
-                        <td className="py-4">fsantos@willinn.io</td>
-                        <td className="py-4 text-right">
-                            <i className="fas fa-trash-alt text-pink-500 mr-3" />
-                            <i className="fas fa-edit text-gray-400" />
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <div className="flex justify-center mt-6">
-                <a href="#" className="text-pink-500 mx-2">Anterior</a>
-                <a href="#" className="bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-2">1</a>
-                <a href="#" className="text-pink-500 mx-2">Siguiente</a>
-            </div>
-        </div>*/
     );
 }

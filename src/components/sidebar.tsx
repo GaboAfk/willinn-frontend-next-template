@@ -4,7 +4,7 @@ import {House, Users} from "lucide-react";
 
 export default function Sidebar() {
     return (
-        <div className="flex flex-col min-h-screen bg-white p-6 px-10">
+        <div className="flex flex-col h-full bg-white p-6 px-10">
             <Link href="/">
                 <div className="flex justify-center mt-5 mb-12">
                     <img
@@ -14,6 +14,8 @@ export default function Sidebar() {
                         height="50"
                     />
                 </div>
+            </Link>
+            <Link href="/">
                 <div className="flex items-center text-gray-300 mb-6">
                     <div className="px-3">
                         <House></House>

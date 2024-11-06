@@ -55,11 +55,12 @@ export default function LoginPage() {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
 
+  const [resetEmail, setResetEmail] = useState('');
   const [resetPassword, setResetPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showRecoveryPassword, setShowRecoveryPassword] = useState(false);
   const router = useRouter();
 
   const toggleShowPassword = () => {
@@ -74,7 +75,8 @@ export default function LoginPage() {
         password: password
       });
       if (response.status === 200 && response.data.isSuccess) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('authEmail', email);
+        localStorage.setItem('authToken', response.data.token);
         router.push('/dashboard');
       }
     } catch (error) {
@@ -84,16 +86,44 @@ export default function LoginPage() {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //register logic fetch POST user
-
-    setShowRegister(false);
+    try {
+      const response = await axios.post(
+          `${_backUrl}/registerUser`,
+          {
+            name: registerName,
+            email: registerEmail,
+            password: registerPassword,
+          }
+      );
+      if (response.status === 200) {
+        setRegisterName('');
+        setRegisterEmail('');
+        setRegisterPassword('');
+        setShowRegister(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRecoverPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //reset pass logic fetch PUT user
-    console.log(resetPassword);
-    setShowForgotPassword(false);
+    try {
+      const response = await axios.put(
+          `${_backUrl}/recoverPassword`,
+          {
+            email: resetEmail,
+            password: resetPassword
+          }
+      );
+      if (response.status === 200) {
+        setEmail('');
+        setResetPassword('');
+        setShowRecoveryPassword(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -105,7 +135,13 @@ export default function LoginPage() {
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-2xl text-gray-800 font-semibold text-center mb-6">Inicia sesión</h2>
           <form onSubmit={handleSubmit}>
-            <Input id="email" label="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Introduce tu email" />
+            <Input
+                id="email"
+                label="E-mail"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Introduce tu email" />
 
             <div className="mb-6">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -133,7 +169,7 @@ export default function LoginPage() {
               <p className="text-sm text-gray-500 hover:text-gray-700" onClick={() => setShowRegister(true)}>
                 Registrarse
               </p>
-              <p className="text-sm text-gray-500 hover:text-gray-700" onClick={() => setShowForgotPassword(true)}>
+              <p className="text-sm text-gray-500 hover:text-gray-700" onClick={() => setShowRecoveryPassword(true)}>
                 ¿Olvidaste la contraseña?
               </p>
             </div>
@@ -143,37 +179,52 @@ export default function LoginPage() {
 
       {showRegister && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md shadow-md">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl text-gray-800 front-semibold">Registrar Usuario</h2>
-              <X type="button" onClick={() => setShowRegister(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full"/>
-            </div>
-            <form onSubmit={handleRegister}></form>
-            <Input id="register-name" label="Nombre" type="string" value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Introduce tu nombre" />
-            <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Introduce tu email" />
-            <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Introduce tu contraseña" />
+          <div className="bg-white p-6 rounded-md shadow-md relative">
+            <X type="button" onClick={() => setShowRegister(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full absolute top-2 right-2 cursor-pointer"/>
+            <h2 className="text-2xl text-gray-800 front-semibold mb-4">Registrar Usuario</h2>
+            <form onSubmit={handleRegister}>
+              <Input
+                  id="register-name"
+                  label="Nombre"
+                  type="string"
+                  value={registerName}
+                  onChange={(e) => setRegisterName(e.target.value)}
+                  placeholder="Introduce tu nombre" />
+              <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Introduce tu email" />
+              <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Introduce tu contraseña" />
 
-            <div className="mb-4">
-              <Button>Registrarse</Button>
-            </div>
+              <div className="mb-4">
+                <Button>Registrarse</Button>
+              </div>
+            </form>
           </div>
         </div>
       )}
 
-      {showForgotPassword && (
+      {showRecoveryPassword && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md shadow-md">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl text-gray-800 front-semibold">Recuperar Contraseña</h2>
-              <X type="button" onClick={() => setShowForgotPassword(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full"/>
-            </div>
-            <form onSubmit={handleForgotPassword}></form>
-            <Input id="register-email" label="Email" type="email" value={registerEmail} onChange={(e) => setEmail(e.target.value)} placeholder="Email a recuperar" />
-            <Input id="register-password" label="Contraseña" type="password" value={registerPassword} onChange={(e) => setResetPassword(e.target.value)} placeholder="Nueva contraseña" />
-
-            <div className="mb-4">
-              <Button>Recuperar</Button>
-            </div>
+          <div className="bg-white p-6 rounded-md shadow-md relative">
+            <X type="button" onClick={() => setShowRecoveryPassword(false)} className="text-gray-500 hover:text-gray-300 hover:bg-gray-700 rounded-full absolute top-2 right-2 cursor-pointer"/>
+            <h2 className="text-2xl text-gray-800 front-semibold mb-4">Recuperar Contraseña</h2>
+            <form onSubmit={handleRecoverPassword}>
+              <Input
+                  id="reset-email"
+                  label="Email"
+                  type="email"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  placeholder="Email a recuperar" />
+              <Input
+                  id="reset-password"
+                  label="Contraseña"
+                  type="password"
+                  value={resetPassword}
+                  onChange={(e) => setResetPassword(e.target.value)}
+                  placeholder="Nueva contraseña" />
+              <div className="mb-4">
+                <Button>Recuperar</Button>
+              </div>
+            </form>
           </div>
         </div>
       )}
