@@ -1,8 +1,26 @@
-
-# Willinn Frontend Template
+<a id="readme-top"></a>
+# Willinn Frontend Template - Prueba Técnica Willinn
 
 ## 📋 Descripción
 Willinn Frontend Template es una aplicación web para la prueba técnica de Trainee de Willinn, fue desarrollada con Next.js, proporciona una interfaz de usuario para la gestión de usuarios. Se implementa funcionalidades de autenticación, CRUD de usuarios y diseño responsive utilizando Tailwind CSS.
+
+## Tabla de Contenidos
+
+- [Características Principales](#características-principales)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Requisitos Previos](#requisitos-previos)
+- [Configuración del Proyecto](#configuración-del-proyecto)
+    - [Instalación](#instalación)
+    - [Variables de Entorno](#variables-de-entorno)
+    - [Ejecución en Desarrollo](#ejecución-en-desarrollo)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Funcionalidades Principales](#funcionalidades-principales)
+    - [Autenticación](#autenticación)
+    - [Gestión de Usuarios](#gestión-de-usuarios)
+    - [Interfaz de Usuario](#interfaz-de-usuario)
+    - [Seguridad](#seguridad)
+- [Autor](#autor)
+
 
 ## 🚀 Características Principales
 - 🔐 Sistema de autenticación completo
@@ -10,6 +28,7 @@ Willinn Frontend Template es una aplicación web para la prueba técnica de Trai
 - 🎨 Interfaz moderna y responsive
 - 🔍 Búsqueda en tiempo real de usuarios
 - 📱 Diseño adaptable a diferentes dispositivos
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🛠 Tecnologías Utilizadas
 - Next.js 14
@@ -18,11 +37,13 @@ Willinn Frontend Template es una aplicación web para la prueba técnica de Trai
 - Tailwind CSS
 - Axios
 - Lucide React (iconos)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 📦 Requisitos Previos
 - Node.js (versión 16 o superior)
 - npm o yarn
 - Una API backend funcionando (configurada en las variables de entorno), utilicé el siguiente repositorio también desarrollado para la prueba técnica. [Click aquí](https://github.com/GaboAfk/Willinn-backend-api-template)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## ⚙️ Configuración del Proyecto
 
@@ -52,6 +73,7 @@ yarn dev
 ```
 
 La aplicación estará disponible en http://localhost:3000
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 📁 Estructura del Proyecto
 
@@ -77,6 +99,7 @@ src/
     ├── user.tsx
     └── userId.tsx
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔍 Funcionalidades Principales
 
@@ -102,6 +125,8 @@ src/
 - Protección de rutas
 - Manejo seguro de contraseñas
 - Validación de formularios
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 👥 Autor
 Gabriel - [GaboAfk](https://github.com/GaboAfk)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
