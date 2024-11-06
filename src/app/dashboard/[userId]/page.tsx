@@ -4,8 +4,15 @@ import { AuthProvider } from "@/app/dashboard/authContext";
 import UserList from "@/components/userList";
 import {UserProvider} from "@/app/dashboard/userContext";
 import UpdateUserForm from "@/components/updateUserForm";
+import {UserId} from "@/types/userId";
 
-export default function DashboardPage({ params }) {
+interface Params {
+    params: {
+        userId: UserId;
+    };
+}
+
+export default function DashboardPage({ params }: Params) {
     const { userId } = params;
 
     return (

@@ -12,7 +12,7 @@ import {useRouter} from "next/navigation";
 export default function UserList() {
     const _backUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     const { authToken } = useAuth()
-    const { users, setUsers, fetchUserList } = useUser();
+    const { users, setUsers } = useUser();
     const [showUserOptions, setShowUserOptions] = useState(Array(users.length).fill(false));
     const [searchUser, setSearchUser] = useState('');
 

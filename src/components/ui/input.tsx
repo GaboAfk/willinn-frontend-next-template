@@ -26,7 +26,7 @@ const Input = ({ id, label, type = "text", value, onChange, placeholder } : Inpu
 
 const Input2 = ({ id, label, type = "text", value, onChange, placeholder } : InputProps) => (
     <div className="mb-4">
-        <label htmlFor={id} className="block text-sm font-medium text-gray-700 font-extrabold">{label}</label>
+        <label htmlFor={id} className="block text-sm text-gray-700 font-extrabold">{label}</label>
         <input
             type={type}
             id={id}

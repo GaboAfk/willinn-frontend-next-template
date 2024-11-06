@@ -3,7 +3,6 @@ import { Input2 } from "@/components/ui/input";
 import { Button2 } from "@/components/ui/button";
 import axios from "axios";
 import {useAuth} from "@/app/dashboard/authContext";
-import {useUser} from "@/app/dashboard/userContext";
 import {X} from "lucide-react";
 import { User } from "@/types/user"
 
@@ -14,7 +13,6 @@ const _backUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function UpdateUserForm({ userId } : { userId: UserId }) {
     const { authToken } = useAuth();
-    const { setUsers } = useUser();
     const router = useRouter();
 
     const [name, setName] = useState('');
