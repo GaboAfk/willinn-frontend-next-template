@@ -7,8 +7,6 @@ import {useAuth} from "@/app/dashboard/authContext";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 
-
-
 export default function UserList() {
     const _backUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     const { authToken } = useAuth()
@@ -52,14 +50,14 @@ export default function UserList() {
         <div className="w-full bg-white rounded-lg shadow p-6 flex flex-col h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold mr-4">Usuarios</h2>
-                <div className="relative">
-                    <div className="absolute inset-y-0 left-4 pr-3 flex items-center text-sm leading-5 cursor-pointer">
-                        <Search className="text-gray-400"></Search>
+                <div className="relative flex-grow max-w-60">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                        <Search className="h-5 w-5 text-gray-400"></Search>
                     </div>
                     <input
                         type="text"
                         placeholder="Buscar"
-                        className="border rounded-full pl-12 pr-4 py-2 text-sm focus:outline-none focus:border-gray-300"
+                        className="w-full border rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-gray-300"
                         value={searchUser}
                         onChange={(e) => setSearchUser(e.target.value)}
                     />

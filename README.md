@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Willinn Frontend Template
 
-First, run the development server:
+## 📋 Descripción
+Willinn Frontend Template es una aplicación web para la prueba técnica de Trainee de Willinn, fue desarrollada con Next.js, proporciona una interfaz de usuario para la gestión de usuarios. Se implementa funcionalidades de autenticación, CRUD de usuarios y diseño responsive utilizando Tailwind CSS.
 
+## 🚀 Características Principales
+- 🔐 Sistema de autenticación completo
+- 👥 Gestión de usuarios (CRUD)
+- 🎨 Interfaz moderna y responsive
+- 🔍 Búsqueda en tiempo real de usuarios
+- 📱 Diseño adaptable a diferentes dispositivos
+
+## 🛠 Tecnologías Utilizadas
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Axios
+- Lucide React (iconos)
+
+## 📦 Requisitos Previos
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Una API backend funcionando (configurada en las variables de entorno), utilicé el siguiente repositorio también desarrollado para la prueba técnica. [Click aquí](https://github.com/GaboAfk/Willinn-backend-api-template)
+
+## ⚙️ Configuración del Proyecto
+
+### Instalación
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/GaboAfk/willinn-frontend-next-template.git
+
+cd willinn-frontend-next-template
+
+npm install
+# o
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Variables de Entorno
+Crea un archivo .env.local en la raíz del proyecto:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Ejecución en Desarrollo
+```bash
+npm run dev
+# o
+yarn dev
+```
 
-## Learn More
+La aplicación estará disponible en http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Estructura del Proyecto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```plaintext
+src/
+├── app/
+│   ├── dashboard/
+│   │   ├── [userId]/
+│   │   ├── authContext.tsx
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── userContext.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ui/
+│   ├── addUserForm.tsx
+│   ├── sidebar.tsx
+│   ├── updateUserForm.tsx
+│   └── userList.tsx
+└── types/
+    ├── user.tsx
+    └── userId.tsx
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🔍 Funcionalidades Principales
 
-## Deploy on Vercel
+### Autenticación
+- Login de usuarios
+- Registro de nuevos usuarios
+- Recuperación de contraseña
+- Manejo de sesiones con tokens
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Gestión de Usuarios
+- Lista de usuarios con búsqueda en tiempo real
+- Creación de nuevos usuarios
+- Actualización de datos de usuarios
+- Eliminación de usuarios (desactivar)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 🎨 Interfaz de Usuario
+- Componentes reutilizables
+- Feedback visual para acciones del usuario
+- Diseño responsive para todos los dispositivos
+
+### 🔐 Seguridad
+- Autenticación basada en tokens
+- Protección de rutas
+- Manejo seguro de contraseñas
+- Validación de formularios
+
+## 👥 Autores
+Gabriel - [GaboAfk](https://github.com/GaboAfk)

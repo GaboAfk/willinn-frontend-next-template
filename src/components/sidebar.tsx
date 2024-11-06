@@ -1,13 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import {House, Users} from "lucide-react";
+import Image from "next/image";
 
 export default function Sidebar() {
     return (
-        <div className="flex flex-col h-full bg-white p-6 px-10">
+        <div className="fixed h-full w-52 bg-white p-6 px-10">
             <Link href="/">
                 <div className="flex justify-center mt-5 mb-12">
-                    <img
+                    <Image
                         src="/willinnlogo.png"
                         alt="Willinn Logo"
                         width="100"
