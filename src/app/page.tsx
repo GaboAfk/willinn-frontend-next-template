@@ -109,13 +109,11 @@ export default function LoginPage() {
   const handleRecoverPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-          `${_backUrl}/recoverPassword`,
-          {
-            email: resetEmail,
-            password: resetPassword
-          }
-      );
+      const response = await axios.put(`${_backUrl}/recoverPassword`, {
+        email: resetEmail,
+        password: resetPassword
+      });
+
       if (response.status === 200) {
         setEmail('');
         setResetPassword('');
