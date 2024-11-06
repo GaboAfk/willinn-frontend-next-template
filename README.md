@@ -22,7 +22,7 @@ Willinn Frontend Template es una aplicación web para la prueba técnica de Trai
 - [Autor](#autor)
 
 
-## 🚀 Características Principales
+## Características Principales
 - 🔐 Sistema de autenticación completo
 - 👥 Gestión de usuarios (CRUD)
 - 🎨 Interfaz moderna y responsive
@@ -30,7 +30,7 @@ Willinn Frontend Template es una aplicación web para la prueba técnica de Trai
 - 📱 Diseño adaptable a diferentes dispositivos
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🛠 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 - Next.js 14
 - React 18
 - TypeScript
@@ -39,13 +39,13 @@ Willinn Frontend Template es una aplicación web para la prueba técnica de Trai
 - Lucide React (iconos)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 📦 Requisitos Previos
+## Requisitos Previos
 - Node.js (versión 16 o superior)
 - npm o yarn
 - Una API backend funcionando (configurada en las variables de entorno), utilicé el siguiente repositorio también desarrollado para la prueba técnica. [Click aquí](https://github.com/GaboAfk/Willinn-backend-api-template)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## ⚙️ Configuración del Proyecto
+## Configuración del Proyecto
 
 ### Instalación
 ```bash
@@ -75,7 +75,7 @@ yarn dev
 La aplicación estará disponible en http://localhost:3000
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```plaintext
 src/
@@ -101,7 +101,7 @@ src/
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🔍 Funcionalidades Principales
+## Funcionalidades Principales
 
 ### Autenticación
 - Login de usuarios
@@ -115,18 +115,18 @@ src/
 - Actualización de datos de usuarios
 - Eliminación de usuarios (desactivar)
 
-### 🎨 Interfaz de Usuario
+### Interfaz de Usuario
 - Componentes reutilizables
 - Feedback visual para acciones del usuario
 - Diseño responsive para todos los dispositivos
 
-### 🔐 Seguridad
+### Seguridad
 - Autenticación basada en tokens
 - Protección de rutas
 - Manejo seguro de contraseñas
 - Validación de formularios
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 👥 Autor
+## Autor
 Gabriel - [GaboAfk](https://github.com/GaboAfk)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
