@@ -103,5 +103,5 @@ src/
 - Manejo seguro de contraseñas
 - Validación de formularios
 
-## 👥 Autores
+## 👥 Autor
 Gabriel - [GaboAfk](https://github.com/GaboAfk)
