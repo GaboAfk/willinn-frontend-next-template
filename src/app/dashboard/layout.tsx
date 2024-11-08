@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="w-52 flex-shrink-0">
                 <Sidebar/>
             </div>
-            <div className="flex-1 bg-gray-100 p-10">{children}</div>
+            <div className="flex-1 bg-gray-100 p-10 text-gray-700">{children}</div>
         </div>
     );
 }
