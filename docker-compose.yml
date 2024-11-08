@@ -1,0 +1,51 @@
+services:
+  willinn-frontend-technical-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: willinn-frontend-technical-test
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://host.docker.internal:5001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - willinn-api-technical-test
+    networks:
+      - api_tech_network
+
+  willinn-api-technical-test:
+    build:
+      context: ../RiderProjects/Willinn-backend-api-template
+      # Cambia el contexto donde se encuentra tu Dockerfile del proyecto de backend
+      dockerfile: Api/Dockerfile-test
+      # y su nombre...
+    container_name: willinn-unknown-api-technical-test
+    environment:
+      - ASPNETCORE_URLS=http://+:5001
+      - ConnectionStrings__DefaultConnection=Server=sql-database-technical-test;Database=UserDb;User=sa;Password=sqlpass*1234;TrustServerCertificate=true;
+    ports:
+      - "5001:5001"
+    depends_on:
+      - sql-database-technical-test
+    networks:
+      - api_tech_network
+
+  sql-database-technical-test:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-database-technical-test
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sqlpass*1234
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/sql-database-technical-test
+    networks:
+      - api_tech_network
+
+volumes:
+  sql_data:
+
+networks:
+  api_tech_network:
+    driver: bridge
