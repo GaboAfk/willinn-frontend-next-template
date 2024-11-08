@@ -61,10 +61,19 @@ yarn install
 ```
 
 ### Variables de Entorno
-Crea un archivo .env.local en la raíz del proyecto:
+Crea un archivo .env.local en la raíz del proyecto (recuerda cambiar al puerto correspondiente si usas el docker-compose del back):
 
 ```env
 NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+```
+O en su defecto usa el archivo `next.config.js` donde ya se configuró una:
+
+```env
+const nextConfig = {
+    env: {
+        NEXT_PUBLIC_BACKEND_URL: "http://localhost:5000",
+    }
+}
 ```
 
 ### Ejecución en Desarrollo
