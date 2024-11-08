@@ -81,10 +81,10 @@ La aplicación estará disponible en http://localhost:3000
 Si solo quieres usar un contenedor de Docker, recuerda tener el backend corriendo:
 ```bash
 docker build -t front-technical-test-img .
-docker run -p 3000:3000 --name front-technical-test-cont front-technical-test-img
+docker run -p 3001:3001 --name front-technical-test-cont front-technical-test-img
 ```
 ### Ejecución Docker Compose
-Si prefieres puedes ejecutar el docker-compose para correr todo a la vez, solo recuerda modificar la ubicación de tu Dockerfile de la API del backend
+Si prefieres puedes ejecutar el docker-compose para correr todo a la vez, solo recuerda modificar, dentro del archivo docker-compose, la ubicación de tu Dockerfile de la API del backend
 ```bash
 docker-compose up --build
 ```
